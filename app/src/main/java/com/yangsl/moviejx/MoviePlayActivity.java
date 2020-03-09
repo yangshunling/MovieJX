@@ -1,12 +1,12 @@
 package com.yangsl.moviejx;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.widget.LinearLayout;
 
 import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
+import com.tencent.smtt.export.external.interfaces.SslError;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
@@ -57,6 +57,12 @@ public class MoviePlayActivity extends AppCompatActivity {
             webView.loadUrl(s);
             return true;
         }
+
+        @Override
+        public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
+            super.onReceivedSslError(webView, sslErrorHandler, sslError);
+            sslErrorHandler.proceed();
+        }
     }
 
     public class MyWebChromeClient extends WebChromeClient {
@@ -90,6 +96,10 @@ public class MoviePlayActivity extends AppCompatActivity {
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mX5webview.canGoBack()) {
+            mX5webview.goBack();
+            return true;
+        }
         return super.onKeyDown(keyCode, event);
     }
 }
