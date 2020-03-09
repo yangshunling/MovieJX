@@ -6,11 +6,13 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.came.viewbguilib.ButtonBgUi;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -18,6 +20,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     ButtonBgUi mGo;
     @BindView(R.id.custom)
     ButtonBgUi mCustom;
+    private MaterialDialog mBuilder;
     private String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -43,16 +47,38 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         //初始化绑定
         ButterKnife.bind(this);
         //申请权限
-        requestPermissions();
+        requestPermissions(false);
+        //初始化Dialog
+        initDialog();
+        //初始化LiveDataBus
+        initLiveDataBus();
         //设置样式
         setTextViewStyles(mTitle);
+    }
+
+    private void initLiveDataBus() {
+        LiveDataBus.get()
+                .with("progress", Boolean.class)
+                .observe(this, b -> {
+                    if (b) mBuilder.show();
+                    else mBuilder.dismiss();
+                });
+    }
+
+    private void initDialog() {
+        mBuilder = new MaterialDialog.Builder(MainActivity.this)
+                .title("初始化破解引擎")
+                .content("若时间过长，请杀死进程，重新启动")
+                .canceledOnTouchOutside(false)
+                .progress(true, 0)
+                .progressIndeterminateStyle(true).build();
     }
 
     @OnClick({R.id.go, R.id.custom})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.go:
-                requestPermissions();
+                requestPermissions(true);
                 break;
             case R.id.custom:
                 Toast.makeText(MainActivity.this, "该功能暂未开启，请持续关注！", Toast.LENGTH_SHORT).show();
@@ -63,9 +89,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     /**
      * 申请动态权限
      */
-    public void requestPermissions() {
+    public void requestPermissions(boolean isStart) {
         if (EasyPermissions.hasPermissions(this, perms)) {
-            startJX();
+            if (isStart)
+                startJX();
         } else {
             EasyPermissions.requestPermissions(this, "请同意以下权限!", 100, perms);
         }

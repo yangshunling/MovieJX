@@ -12,9 +12,12 @@ import com.tencent.smtt.sdk.QbSdk;
  * @Time: 2020/2/18 14:26
  */
 public class MyApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();
+        //通知UI显示进度条
+        LiveDataBus.get().with("progress").postValue(true);
         //非wifi情况下，主动下载x5内核
         QbSdk.setDownloadWithoutWifi(true);
         //x5内核初始化接口
@@ -27,6 +30,8 @@ public class MyApplication extends Application {
 
             @Override
             public void onViewInitFinished(boolean b) {
+                //通知UI隐藏进度条
+                LiveDataBus.get().with("progress").postValue(false);
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
                 if (b)
                     Toast.makeText(MyApplication.this, "内核引擎加载成功", Toast.LENGTH_SHORT).show();
