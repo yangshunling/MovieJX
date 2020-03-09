@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.yangsl.moviejx"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+    }
+    signingConfigs {
+        release {
+            keyAlias 'vip'
+            keyPassword '123456'
+            storeFile file('vip.jks')
+            storePassword '123456'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = "vip_v${defaultConfig.versionName}_release.apk"
+                outputFileName = fileName
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    implementation 'com.github.ithedan:CustomViewBgUi:v1.0'
+    implementation 'pub.devrel:easypermissions:2.0.0'
+}
