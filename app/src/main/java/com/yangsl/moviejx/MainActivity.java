@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "该功能暂未开启，请持续关注", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "该功能暂未开启，请持续关注！", Toast.LENGTH_SHORT).show();
             }
         });
     }
