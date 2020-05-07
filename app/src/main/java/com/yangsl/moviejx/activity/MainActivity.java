@@ -1,4 +1,4 @@
-package com.yangsl.moviejx;
+package com.yangsl.moviejx.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -15,12 +15,14 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.came.viewbguilib.ButtonBgUi;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yangsl.moviejx.utils.LiveDataBus;
+import com.yangsl.moviejx.R;
+import com.yangsl.moviejx.utils.SpUtil;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -81,9 +83,24 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 requestPermissions(true);
                 break;
             case R.id.custom:
-                Toast.makeText(MainActivity.this, "该功能暂未开启，请持续关注！", Toast.LENGTH_SHORT).show();
+                customJX();
                 break;
         }
+    }
+
+    private void customJX() {
+        new MaterialDialog.Builder(MainActivity.this)
+                .title("自定义解析器")
+                .content("请输入解析地址")
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .input("如：https://www.baidu.com", SpUtil.getString("baseurl"), new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        SpUtil.put("baseurl", input.toString());
+                    }
+                })
+                .positiveText("确定")
+                .show();
     }
 
     /**

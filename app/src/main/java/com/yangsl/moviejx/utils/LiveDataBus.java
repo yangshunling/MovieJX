@@ -1,4 +1,4 @@
-package com.yangsl.moviejx;
+package com.yangsl.moviejx.utils;
 
 import android.os.Handler;
 import android.os.Looper;

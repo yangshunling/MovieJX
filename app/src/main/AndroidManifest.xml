@@ -31,7 +31,7 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MoviePlayActivity"
+            android:name=".activity.MoviePlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"

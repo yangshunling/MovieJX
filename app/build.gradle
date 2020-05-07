@@ -57,4 +57,5 @@ dependencies {
     implementation 'com.github.ithedan:CustomViewBgUi:v1.0'
     implementation 'pub.devrel:easypermissions:2.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.tencent:mmkv:1.0.23'
 }

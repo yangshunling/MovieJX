@@ -1,10 +1,11 @@
 package com.yangsl.moviejx;
 
 import android.app.Application;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.tencent.mmkv.MMKV;
 import com.tencent.smtt.sdk.QbSdk;
+import com.yangsl.moviejx.utils.LiveDataBus;
 
 /**
  * @Description: MyApplication
@@ -16,6 +17,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化MMKV
+        MMKV.initialize(this);
         //通知UI显示进度条
         LiveDataBus.get().with("progress").postValue(true);
         //非wifi情况下，主动下载x5内核

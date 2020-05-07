@@ -1,6 +1,7 @@
-package com.yangsl.moviejx;
+package com.yangsl.moviejx.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 
 import com.gyf.immersionbar.BarHide;
@@ -11,6 +12,8 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import com.yangsl.moviejx.R;
+import com.yangsl.moviejx.utils.SpUtil;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 @SuppressWarnings("ALL")
 public class MoviePlayActivity extends AppCompatActivity {
 
-    private String url = "";
+    private String movieUrl = "";
     private WebView mX5webview;
     private WebSettings mSettings;
 
@@ -32,11 +35,17 @@ public class MoviePlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_play);
         ImmersionBar.with(this).hideBar(BarHide.FLAG_HIDE_BAR).init();
+        initUrl();
         init();
     }
 
+    private void initUrl() {
+        String url = getIntent().getStringExtra("url");
+        String baseURL = SpUtil.getString("baseurl");
+        movieUrl = baseURL + url;
+    }
+
     private void init() {
-        url = getIntent().getStringExtra("url");
         mX5webview = (WebView) findViewById(R.id.x5webview);
         mSettings = mX5webview.getSettings();
         mSettings.setJavaScriptEnabled(true);
@@ -48,7 +57,7 @@ public class MoviePlayActivity extends AppCompatActivity {
         mSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
         mX5webview.setWebViewClient(new MyWebviewClient());
         mX5webview.setWebChromeClient(new WebChromeClient());
-        mX5webview.loadUrl("http://jqaaa.com/jx.php?url=" + url);
+        mX5webview.loadUrl(movieUrl);
     }
 
     public class MyWebviewClient extends WebViewClient {
