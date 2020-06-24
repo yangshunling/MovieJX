@@ -6,8 +6,8 @@ android {
         applicationId "com.yangsl.moviejx"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.4"
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
@@ -50,12 +50,17 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0-alpha04'
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
-    implementation 'com.github.ithedan:CustomViewBgUi:v1.0'
     implementation 'pub.devrel:easypermissions:2.0.0'
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.tencent:mmkv:1.0.23'
+    //UI
+    implementation 'com.yanzhikai:TextPathView:0.2.1'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.github.ithedan:CustomViewBgUi:v1.0'
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    //Bugly
+    implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
 }

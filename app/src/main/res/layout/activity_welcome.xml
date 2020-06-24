@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <yanzhikai.textpath.AsyncTextPathView
+        android:id="@+id/vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        app:duration="2000"
+        app:pathStrokeColor="@color/colorPrimary"
+        app:showPainter="true"
+        app:text="VIP视频解析"
+        app:textInCenter="true"
+        app:textSize="40dp" />
+
+    <ImageView
+        android:id="@+id/wx"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/wx"
+        android:visibility="invisible" />
+</RelativeLayout>

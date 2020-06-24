@@ -6,16 +6,20 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.came.viewbguilib.ButtonBgUi;
-import com.google.android.material.textfield.TextInputEditText;
-import com.yangsl.moviejx.utils.LiveDataBus;
+import com.gyf.immersionbar.BarHide;
+import com.gyf.immersionbar.ImmersionBar;
+import com.rengwuxian.materialedittext.MaterialEditText;
+import com.tencent.bugly.Bugly;
 import com.yangsl.moviejx.R;
 import com.yangsl.moviejx.utils.SpUtil;
 
@@ -32,13 +36,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     @BindView(R.id.title)
     TextView mTitle;
-    @BindView(R.id.url)
-    TextInputEditText mUrl;
     @BindView(R.id.go)
     ButtonBgUi mGo;
     @BindView(R.id.custom)
     ButtonBgUi mCustom;
-    private MaterialDialog mBuilder;
+    @BindView(R.id.url)
+    MaterialEditText mUrl;
     private String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -46,34 +49,32 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //初始化Bugly
+        Bugly.init(getApplicationContext(), "2c650db6bb", false);
+        //初始化沉浸式
+        ImmersionBar.with(this).hideBar(BarHide.FLAG_HIDE_BAR).init();
         //初始化绑定
         ButterKnife.bind(this);
         //申请权限
         requestPermissions(false);
-        //初始化Dialog
-        initDialog();
-        //初始化LiveDataBus
-        initLiveDataBus();
         //设置样式
         setTextViewStyles(mTitle);
-    }
+        mUrl.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-    private void initLiveDataBus() {
-        LiveDataBus.get()
-                .with("progress", Boolean.class)
-                .observe(this, b -> {
-                    if (b) mBuilder.show();
-                    else mBuilder.dismiss();
-                });
-    }
+            }
 
-    private void initDialog() {
-        mBuilder = new MaterialDialog.Builder(MainActivity.this)
-                .title("初始化破解引擎")
-                .content("若时间过长，请杀死进程，重新启动")
-                .canceledOnTouchOutside(false)
-                .progress(true, 0)
-                .progressIndeterminateStyle(true).build();
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                mUrl.setSelection(0);
+            }
+        });
     }
 
     @OnClick({R.id.go, R.id.custom})
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private void setTextViewStyles(TextView textView) {
         int[] colors = {Color.RED, Color.GREEN, Color.BLUE};//颜色的数组
-        float[] position = {0f, 0.7f, 1.0f};//颜色渐变位置的数组
+        float[] position = {0.2f, 0.5f, 0.8f};//颜色渐变位置的数组
         LinearGradient mLinearGradient = new LinearGradient(0, 0, textView.getPaint().getTextSize() * textView.getText().length(), 0, colors, position, Shader.TileMode.CLAMP);
         textView.getPaint().setShader(mLinearGradient);
         textView.invalidate();

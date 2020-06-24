@@ -2,6 +2,8 @@ package com.yangsl.moviejx.utils;
 
 import com.tencent.mmkv.MMKV;
 
+import static com.yangsl.moviejx.Constance.MOVIEURL;
+
 /**
  * @Description: MMKV高性能存储
  * @Author: Anonymous
@@ -21,7 +23,7 @@ public class SpUtil {
     }
 
     public static String getString(String key) {
-        return kv.decodeString(key, "https://www.1717yun.com/jx/ty.php?url=");
+        return kv.decodeString(key, MOVIEURL);
     }
 
     public static boolean getBoolean(String key) {
