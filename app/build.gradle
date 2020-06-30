@@ -60,6 +60,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.github.ithedan:CustomViewBgUi:v1.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     //Bugly
     implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'

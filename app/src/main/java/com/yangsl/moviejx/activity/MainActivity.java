@@ -1,150 +1,158 @@
 package com.yangsl.moviejx.activity;
 
-import android.Manifest;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.came.viewbguilib.ButtonBgUi;
-import com.gyf.immersionbar.BarHide;
-import com.gyf.immersionbar.ImmersionBar;
-import com.rengwuxian.materialedittext.MaterialEditText;
-import com.tencent.bugly.Bugly;
+import android.view.KeyEvent;
+import android.widget.FrameLayout;
+
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.yangsl.moviejx.R;
-import com.yangsl.moviejx.utils.SpUtil;
+import com.yangsl.moviejx.base.BaseActivity;
+import com.yangsl.moviejx.callback.PermissionsCallback;
+import com.yangsl.moviejx.fragment.MineFragment;
+import com.yangsl.moviejx.fragment.MovieFragment;
+import com.yangsl.moviejx.fragment.UtilFragment;
 
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+/**
+ * MainActivity
+ */
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
-    @BindView(R.id.title)
-    TextView mTitle;
-    @BindView(R.id.go)
-    ButtonBgUi mGo;
-    @BindView(R.id.custom)
-    ButtonBgUi mCustom;
-    @BindView(R.id.url)
-    MaterialEditText mUrl;
-    private String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    @BindView(R.id.nav_bar)
+    BottomNavigationBar mNavBar;
+
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
+
+    private MovieFragment mMovieFragment;
+    private UtilFragment mUtilFragment;
+    private MineFragment mMineFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //初始化Bugly
-        Bugly.init(getApplicationContext(), "2c650db6bb", false);
-        //初始化沉浸式
-        ImmersionBar.with(this).hideBar(BarHide.FLAG_HIDE_BAR).init();
-        //初始化绑定
-        ButterKnife.bind(this);
-        //申请权限
-        requestPermissions(false);
-        //设置样式
-        setTextViewStyles(mTitle);
-        mUrl.addTextChangedListener(new TextWatcher() {
+    public int getContentView() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initView() {
+        initNavBar();
+        initFragment();
+    }
+
+    @Override
+    public void initData() {
+        requestPermissions(new PermissionsCallback() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onAccept() {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onDenied() {
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                mUrl.setSelection(0);
             }
         });
     }
 
-    @OnClick({R.id.go, R.id.custom})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.go:
-                requestPermissions(true);
-                break;
-            case R.id.custom:
-                customJX();
-                break;
-        }
+    private void initNavBar() {
+        mNavBar.setTabSelectedListener(this);
+        mNavBar.addItem(new BottomNavigationItem(R.drawable.nav_movie, "电影").setActiveColorResource(R.color.app_color).setInActiveColorResource(R.color.white))
+                .addItem(new BottomNavigationItem(R.drawable.nav_util, "工具").setActiveColorResource(R.color.azure).setInActiveColorResource(R.color.white))
+                        .addItem(new BottomNavigationItem(R.drawable.nav_mine, "我的").setActiveColorResource(R.color.green).setInActiveColorResource(R.color.white))
+                        .setFirstSelectedPosition(0)
+                        .initialise();
     }
 
-    private void customJX() {
-        new MaterialDialog.Builder(MainActivity.this)
-                .title("自定义解析器")
-                .content("请输入解析地址")
-                .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("如：https://www.baidu.com", SpUtil.getString("baseurl"), new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                        SpUtil.put("baseurl", input.toString());
-                    }
-                })
-                .positiveText("确定")
-                .show();
-    }
-
-    /**
-     * 申请动态权限
-     */
-    public void requestPermissions(boolean isStart) {
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            if (isStart)
-                startJX();
-        } else {
-            EasyPermissions.requestPermissions(this, "请同意以下权限!", 100, perms);
-        }
-    }
-
-    /**
-     * 开始解析
-     */
-    private void startJX() {
-        String movieUrl = mUrl.getText().toString().trim();
-        if (TextUtils.isEmpty(movieUrl)) {
-            Toast.makeText(MainActivity.this, "请输入有效的资源链接", Toast.LENGTH_SHORT).show();
-        } else {
-            Intent intent = new Intent(MainActivity.this, MoviePlayActivity.class);
-            intent.putExtra("url", movieUrl);
-            startActivity(intent);
-        }
-    }
-
-    private void setTextViewStyles(TextView textView) {
-        int[] colors = {Color.RED, Color.GREEN, Color.BLUE};//颜色的数组
-        float[] position = {0.2f, 0.5f, 0.8f};//颜色渐变位置的数组
-        LinearGradient mLinearGradient = new LinearGradient(0, 0, textView.getPaint().getTextSize() * textView.getText().length(), 0, colors, position, Shader.TileMode.CLAMP);
-        textView.getPaint().setShader(mLinearGradient);
-        textView.invalidate();
+    private void initFragment() {
+        //实例化
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        //创建Fragment
+        mMovieFragment = new MovieFragment();
+        transaction.add(R.id.main_content, mMovieFragment);
+        transaction.commit();
     }
 
     @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+    public void onTabSelected(int position) {
+        initStatusBar();
+        switch (position) {
+            case 0:
+                transaction = manager.beginTransaction();
+                if (mMovieFragment == null) {
+                    mMovieFragment = new MovieFragment();
+                    transaction.add(R.id.main_content, mMovieFragment);
+                } else {
+                    hintFragment(transaction);
+                    transaction.show(mMovieFragment);
+                }
+                transaction.commit();
+                break;
+            case 1:
+                transaction = manager.beginTransaction();
+                if (mUtilFragment == null) {
+                    mUtilFragment = new UtilFragment();
+                    transaction.add(R.id.main_content, mUtilFragment);
+                } else {
+                    hintFragment(transaction);
+                    transaction.show(mUtilFragment);
+                }
+                transaction.commit();
+                break;
+            case 2:
+                transaction = manager.beginTransaction();
+                if (mMineFragment == null) {
+                    mMineFragment = new MineFragment();
+                    transaction.add(R.id.main_content, mMineFragment);
+                } else {
+                    hintFragment(transaction);
+                    transaction.show(mMineFragment);
+                }
+                transaction.commit();
+                break;
+        }
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
 
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+    public void onTabReselected(int position) {
 
+    }
+
+    private void hintFragment(FragmentTransaction transaction) {
+        if (mMovieFragment != null) {
+            transaction.hide(mMovieFragment);
+        }
+        if (mUtilFragment != null) {
+            transaction.hide(mUtilFragment);
+        }
+        if (mMineFragment != null) {
+            transaction.hide(mMineFragment);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            long firstTime = 0;
+            if (System.currentTimeMillis() - firstTime > 2000) {
+                showToast("再按一次退出程序");
+                firstTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

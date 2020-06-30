@@ -3,4 +3,21 @@
     <color name="colorPrimary">#409eff</color>
     <color name="colorPrimaryDark">#409eff</color>
     <color name="colorAccent">#409eff</color>
+
+    <color name="app_color">#409eff</color>
+    <!--基本颜色-->
+    <color name="white">#ffffff</color>//白色
+    <color name="black">#000000</color>//黑色
+    <color name="gray">#999999</color>//灰色
+    <color name="gray2">#cccccc</color>
+    <color name="gray3">#666666</color>
+    <color name="gray4">#E9E9E9</color>
+    <color name="gray5">#333333</color>
+    <color name="gray6">#eeeeee</color>
+    <color name="gray7">#f1f1f1</color>
+    <color name="blue">#492ff7</color>//蓝色
+    <color name="yellow">#f5fa02</color>//黄色
+    <color name="red">#C70000</color>//艳红
+    <color name="green">#009688</color>//绿色
+    <color name="azure">#607b8b</color>
 </resources>
