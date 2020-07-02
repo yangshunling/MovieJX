@@ -65,29 +65,35 @@
         app:met_iconPadding="2dp"
         app:met_singleLineEllipsis="true" />
 
-    <com.came.viewbguilib.ButtonBgUi
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/go"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:clickable="true"
+        android:gravity="center"
+        android:padding="10dp"
         android:text="立即解析"
-        android:textColor="#ffffff"
-        android:textSize="16dp"
-        app:defaultColor="@color/colorPrimary"
-        app:raoundRadius="5dp" />
+        android:textColor="@color/white"
+        app:qmui_backgroundColor="@color/app_color"
+        app:qmui_borderColor="@color/white"
+        app:qmui_borderWidth="2px"
+        app:qmui_radius="5dp" />
 
-    <com.came.viewbguilib.ButtonBgUi
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/custom"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:clickable="true"
+        android:gravity="center"
+        android:padding="10dp"
         android:text="自定义解析器"
-        android:textColor="#ffffff"
-        android:textSize="16dp"
-        app:defaultColor="@color/colorPrimary"
-        app:raoundRadius="5dp" />
+        android:textColor="@color/white"
+        app:qmui_backgroundColor="@color/app_color"
+        app:qmui_borderColor="@color/white"
+        app:qmui_borderWidth="2px"
+        app:qmui_radius="5dp" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -13,9 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.came.viewbguilib.ButtonBgUi;
 import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.tencent.bugly.Bugly;
 import com.yangsl.moviejx.R;
@@ -31,9 +31,9 @@ public class MovieFragment extends BaseFragment {
     @BindView(R.id.title)
     TextView mTitle;
     @BindView(R.id.go)
-    ButtonBgUi mGo;
+    QMUIRoundButton mGo;
     @BindView(R.id.custom)
-    ButtonBgUi mCustom;
+    QMUIRoundButton mCustom;
     @BindView(R.id.url)
     MaterialEditText mUrl;
 
@@ -89,12 +89,7 @@ public class MovieFragment extends BaseFragment {
                 .title("自定义解析器")
                 .content("请输入解析地址")
                 .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("如：https://www.baidu.com", SpUtil.getString("baseurl"), new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                        SpUtil.put("baseurl", input.toString());
-                    }
-                })
+                .input("如：https://www.baidu.com", SpUtil.getString("baseurl"), (dialog, input) -> SpUtil.put("baseurl", input.toString()))
                 .positiveText("确定")
                 .show();
     }

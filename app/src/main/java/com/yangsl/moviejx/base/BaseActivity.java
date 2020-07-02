@@ -26,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
     private FrameLayout mViewContent;
 
     private String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
     private PermissionsCallback mCallback;
 
     @Override

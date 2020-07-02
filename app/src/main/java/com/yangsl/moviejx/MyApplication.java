@@ -3,7 +3,6 @@ package com.yangsl.moviejx;
 import android.app.Application;
 import android.widget.Toast;
 
-import com.tencent.bugly.Bugly;
 import com.tencent.mmkv.MMKV;
 import com.tencent.smtt.sdk.QbSdk;
 

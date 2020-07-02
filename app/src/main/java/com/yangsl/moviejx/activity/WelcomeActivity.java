@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
 import com.yangsl.moviejx.R;
+import com.yangsl.moviejx.base.BaseActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 import yanzhikai.textpath.AsyncTextPathView;
 import yanzhikai.textpath.PathAnimatorListener;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
 
     @BindView(R.id.vip)
     AsyncTextPathView mVip;
@@ -26,25 +27,22 @@ public class WelcomeActivity extends AppCompatActivity {
     ImageView mWx;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
-        ImmersionBar.with(this).hideBar(BarHide.FLAG_HIDE_BAR).init();
-        ButterKnife.bind(this);
-        initData();
+    public int getContentView() {
+        return R.layout.activity_welcome;
     }
 
-    public void initData() {
+    @Override
+    public void initView() {
         mVip = findViewById(R.id.vip);
         mVip.setFillColor(true);
         //从无到显示
         mVip.startAnimation(0, 1);
-        mVip.setAnimatorListener(new PathAnimatorListener(){
+        mVip.setAnimatorListener(new PathAnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 mWx.setVisibility(View.VISIBLE);
-                mWx.setAnimation(AnimationUtils.loadAnimation(WelcomeActivity.this,R.anim.alpha_anim));
+                mWx.setAnimation(AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.alpha_anim));
             }
         });
         new Handler().postDelayed(new Runnable() {
@@ -56,4 +54,8 @@ public class WelcomeActivity extends AppCompatActivity {
         }, 5000);
     }
 
+    @Override
+    public void initData() {
+
+    }
 }

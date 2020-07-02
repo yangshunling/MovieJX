@@ -50,18 +50,33 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0-beta01'
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'pub.devrel:easypermissions:2.0.0'
     implementation 'com.tencent:mmkv:1.0.23'
+    /**
+     * Image
+     */
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
+    implementation 'top.zibin:Luban:1.1.8'
+    /**
+     * RecyclerView
+     */
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'//RecycleView分割线
     //UI
     implementation 'com.yanzhikai:TextPathView:0.2.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.github.ithedan:CustomViewBgUi:v1.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.traex.rippleeffect:library:1.3'
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.3.7'
+    implementation 'com.qmuiteam:qmui:2.0.0-alpha10'
     //Bugly
     implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
