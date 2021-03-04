@@ -5,21 +5,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/before"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/image_size"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/youku" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/red"
+            android:textSize="15dp"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +34,7 @@
         android:padding="20dp">
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/choose"
+            android:id="@+id/compress"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
@@ -37,12 +42,12 @@
             android:clickable="true"
             android:gravity="center"
             android:padding="10dp"
-            android:text="选择图片"
-            app:qmui_radius="50dp"
+            android:text="开始压缩"
             android:textColor="@color/white"
             app:qmui_backgroundColor="@color/app_color"
             app:qmui_borderColor="@color/white"
-            app:qmui_borderWidth="2px" />
+            app:qmui_borderWidth="2px"
+            app:qmui_radius="50dp" />
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
             android:id="@+id/save"
@@ -50,7 +55,6 @@
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
-            app:qmui_radius="50dp"
             android:clickable="true"
             android:gravity="center"
             android:padding="10dp"
@@ -58,22 +62,29 @@
             android:textColor="@color/white"
             app:qmui_backgroundColor="@color/app_color"
             app:qmui_borderColor="@color/white"
-            app:qmui_borderWidth="2px" />
+            app:qmui_borderWidth="2px"
+            app:qmui_radius="50dp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/after"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/compress_image_size"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/youku" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/red"
+            android:textSize="15dp"/>
+    </RelativeLayout>
+
 </LinearLayout>

@@ -36,6 +36,8 @@ public class MovieFragment extends BaseFragment {
     QMUIRoundButton mCustom;
     @BindView(R.id.url)
     MaterialEditText mUrl;
+    @BindView(R.id.search)
+    QMUIRoundButton mSearch;
 
     @Override
     public int getContentView() {
@@ -72,7 +74,7 @@ public class MovieFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.go, R.id.custom})
+    @OnClick({R.id.go, R.id.custom, R.id.search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.go:
@@ -80,6 +82,11 @@ public class MovieFragment extends BaseFragment {
                 break;
             case R.id.custom:
                 customJX();
+                break;
+            case R.id.search:
+                Intent intent = new Intent(getActivity(), MoviePlayActivity.class);
+                intent.putExtra("url", "http://www.zzwly.com/");
+                startActivity(intent);
                 break;
         }
     }
@@ -103,7 +110,7 @@ public class MovieFragment extends BaseFragment {
             Toast.makeText(getActivity(), "请输入有效的资源链接", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getActivity(), MoviePlayActivity.class);
-            intent.putExtra("url", movieUrl);
+            intent.putExtra("url", SpUtil.getString("baseurl") + movieUrl);
             startActivity(intent);
         }
     }

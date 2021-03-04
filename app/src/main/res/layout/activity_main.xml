@@ -17,7 +17,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/gray"/>
+        android:background="@color/azure"/>
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/nav_bar"
@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         app:bnbAnimationDuration="200"
         app:bnbAutoHideEnabled="true"
-        app:bnbBackgroundStyle="background_style_ripple"
+        app:bnbBackgroundStyle="background_style_static"
         app:bnbElevation="0dp"
-        app:bnbMode="mode_shifting"/>
+        app:bnbMode="mode_default"/>
 
 </LinearLayout>

@@ -40,9 +40,7 @@ public class MoviePlayActivity extends AppCompatActivity {
     }
 
     private void initUrl() {
-        String url = getIntent().getStringExtra("url");
-        String baseURL = SpUtil.getString("baseurl");
-        movieUrl = baseURL + url;
+        movieUrl = getIntent().getStringExtra("url");
     }
 
     private void init() {

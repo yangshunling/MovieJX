@@ -34,7 +34,7 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
         <!--Activity注册-->
-        <activity android:name=".activity.WelcomeActivity"></activity>
+        <activity android:name=".activity.WelcomeActivity"/>
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

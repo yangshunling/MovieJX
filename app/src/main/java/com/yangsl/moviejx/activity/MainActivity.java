@@ -1,9 +1,6 @@
 package com.yangsl.moviejx.activity;
 
-import android.content.Intent;
-
 import android.view.KeyEvent;
-import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -33,6 +30,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private UtilFragment mUtilFragment;
     private MineFragment mMineFragment;
 
+    private long firstTime = 0;
+
     @Override
     public int getContentView() {
         return R.layout.activity_main;
@@ -61,9 +60,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     private void initNavBar() {
         mNavBar.setTabSelectedListener(this);
-        mNavBar.addItem(new BottomNavigationItem(R.drawable.nav_movie, "电影").setActiveColorResource(R.color.app_color).setInActiveColorResource(R.color.white))
-                .addItem(new BottomNavigationItem(R.drawable.nav_util, "工具").setActiveColorResource(R.color.azure).setInActiveColorResource(R.color.white))
-                        .addItem(new BottomNavigationItem(R.drawable.nav_mine, "我的").setActiveColorResource(R.color.green).setInActiveColorResource(R.color.white))
+        mNavBar.addItem(new BottomNavigationItem(R.drawable.nav_movie, "电影").setActiveColorResource(R.color.app_color).setInActiveColorResource(R.color.azure))
+                .addItem(new BottomNavigationItem(R.drawable.nav_util, "工具").setActiveColorResource(R.color.app_color).setInActiveColorResource(R.color.azure))
+//                        .addItem(new BottomNavigationItem(R.drawable.nav_mine, "我的").setActiveColorResource(R.color.app_color).setInActiveColorResource(R.color.azure))
                         .setFirstSelectedPosition(0)
                         .initialise();
     }
@@ -143,7 +142,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            long firstTime = 0;
             if (System.currentTimeMillis() - firstTime > 2000) {
                 showToast("再按一次退出程序");
                 firstTime = System.currentTimeMillis();
@@ -151,7 +149,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 finish();
                 System.exit(0);
             }
-            return true;
+            return false;
         }
         return super.onKeyDown(keyCode, event);
     }

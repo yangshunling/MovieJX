@@ -3,8 +3,10 @@ package com.yangsl.moviejx.activity.util;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -34,12 +36,19 @@ public class PhotoCompressActivity extends BaseActivity {
 
     @BindView(R.id.before)
     ImageView mBefore;
-    @BindView(R.id.choose)
-    QMUIRoundButton mChoose;
+    @BindView(R.id.compress)
+    QMUIRoundButton mCompress;
     @BindView(R.id.save)
     QMUIRoundButton mSave;
     @BindView(R.id.after)
     ImageView mAfter;
+    @BindView(R.id.image_size)
+    TextView mImageSize;
+    @BindView(R.id.compress_image_size)
+    TextView mCompressImageSize;
+
+    private File imageFile;
+
 
     @Override
     public int getContentView() {
@@ -56,11 +65,14 @@ public class PhotoCompressActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.choose, R.id.save})
+    @OnClick({R.id.before, R.id.compress, R.id.save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.choose:
+            case R.id.before:
                 chooseImage();
+                break;
+            case R.id.compress:
+                compressImage(imageFile);
                 break;
             case R.id.save:
                 saveImage();
@@ -88,17 +100,18 @@ public class PhotoCompressActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             //图片路径 同样视频地址也是这个 根据requestCode
-            List<Uri> pathList = Matisse.obtainResult(data);
-            Glide.with(this).load(pathList.get(0)).into(mBefore);
-            compressImage(pathList.get(0));
+            List<String> pathList = Matisse.obtainPathResult(data);
+            imageFile = new File(pathList.get(0));
+            Glide.with(PhotoCompressActivity.this).load(imageFile).into(mBefore);
+            mImageSize.setText("原始图片:" + imageFile.length() / 1024 + "k");
         }
     }
 
-    private void compressImage(Uri uri) {
-        Luban.with(this)
-                .load(uri)
+    private void compressImage(File imageFile) {
+        Luban.with(PhotoCompressActivity.this)
+                .load(imageFile)
                 .ignoreBy(100)
-                .setTargetDir("getPath()")
+                .setTargetDir("/sdcard")
                 .filter(new CompressionPredicate() {
                     @Override
                     public boolean apply(String path) {
@@ -108,17 +121,19 @@ public class PhotoCompressActivity extends BaseActivity {
                 .setCompressListener(new OnCompressListener() {
                     @Override
                     public void onStart() {
-                        // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                        showToast("正在开始压缩......");
                     }
 
                     @Override
                     public void onSuccess(File file) {
-                        // TODO 压缩成功后调用，返回压缩后的图片文件
+                        Glide.with(PhotoCompressActivity.this).load(file).into(mAfter);
+                        mCompressImageSize.setText("压缩图片:" + file.length() / 1024 + "k");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        // TODO 当压缩过程出现问题时调用
+                        showToast("压缩失败");
+                        Log.v("TAG", e.getMessage());
                     }
                 }).launch();
     }
